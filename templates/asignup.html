@@ -1,0 +1,23 @@
+{% extends "basea.html" %}
+{% block title %}TicketShow | Admin{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_login.css') }}">
+{% endblock %}
+{% block content %}      
+    <div class="container">
+      <h1>Admin Signup</h1>
+      <form id="signup-form" action="/asignup" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <label for="password">Secret Key:</label>
+        <input type="password" id="password" name="skey" required>
+        <button type="submit">Sign Up</button>
+      </form>
+      <p>Already have an account? <a href="alogin" id="login-link">Log in here</a></p>
+    </div>
+{% endblock %}

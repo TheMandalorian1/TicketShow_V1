@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Admin | Create Show</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_addshow.css') }}">
+	<style>
+		
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h2>Create Show</h2>
+		<form action="/add_show/{{own.venue_id}}" method="post">
+
+			<label for="venue_name">Venue Name:</label>
+            <select id="venue_name" name="venue_id" required>
+                <option value="{{own.venue_id}}">{{own.venue_name + ', ' + own.venue_place + ', ' + own.venue_location}}</option>
+                {% for v in vlist %}
+                <option value="{{v.venue_id}}">{{v.venue_name + ', ' + v.venue_place + ', ' + v.venue_location}}</option>
+                {% endfor %}
+			</select>
+
+			<label for="movie_name">Movie Name:</label>
+            <select id="movie_name" name="movie_id" required>
+                {% for m in mlist %}
+                <option value="{{m.movie_id}}">{{m.movie_name}}</option>
+                {% endfor %}
+			</select>
+
+			<label for="start_time">Start Time:</label>
+            <input type="datetime-local" name="start_time" required>
+
+			<label for="end_time">End Time:</label>
+            <input type="datetime-local" name="end_time"  required>
+
+			<label for="price">Price:</label>
+			<input type="number" id="price" name="price" placeholder="Enter show price" 
+						max="1000" min="50" step="25" required>
+	
+			<input type="submit" value="Create">
+		</form>
+	</div>
+</body>
+</html>

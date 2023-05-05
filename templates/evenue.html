@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Admin | Edit Venue</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_evenue.css') }}">
+	<style>
+		
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h2>Edit Venue</h2>
+		<form action="/edit_venue/{{venue.venue_id}}" method="post">
+			<label for="venue_name">Venue Name:</label>
+			<input type="text" id="venue_name" name="venue_name" value="{{venue.venue_name}}" required>
+
+			<label for="place">Place:</label>
+			<input type="text" id="place" name="place" value="{{venue.venue_place}}" required>
+
+			<label for="location">Location:</label>
+			<input type="text" id="location" name="location" value={{venue.venue_location}} required>
+
+			<label for="capacity">Capacity:</label>
+			<select id="capacity" name="capacity">
+				<option value="{{venue.capacity}}">{{venue.capacity}}</option>
+				<option value="100">100</option>
+				<option value="200">200</option>
+				<option value="300">300</option>
+				<option value="300">400</option>
+				<option value="500">500</option>
+			</select>
+			<input type="submit" value="Edit">
+		</form>
+	</div>
+</body>
+</html>

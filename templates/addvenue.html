@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Venue</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_addvenue.css') }}">
+	<style>
+		
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h2>Add Venue</h2>
+		<form action="/addvenue" method="post">
+			<label for="venue_name">Venue Name:</label>
+			<input type="text" id="venue_name" name="venue_name" placeholder="Enter the name of the venue">
+
+			<label for="place">Place:</label>
+			<input type="text" id="place" name="place" placeholder="Enter the place where the venue is located">
+
+			<label for="location">Location:</label>
+			<input type="text" id="location" name="location" placeholder="Enter the specific location of the venue">
+
+			<label for="capacity">Capacity:</label>
+			<select id="capacity" name="capacity">
+				<option value="100">100</option>
+				<option value="200">200</option>
+				<option value="300">300</option>
+				<option value="300">400</option>
+				<option value="500">500</option>
+			</select>
+			<input type="submit" value="ADD">
+		</form>
+	</div>
+</body>
+</html>

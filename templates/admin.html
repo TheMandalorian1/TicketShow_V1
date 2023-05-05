@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" 
+        rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" 
+        crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_admin.css') }}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+	<!-- <link rel="stylesheet" href="/static/style.css"> -->
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> 
+	<title>Admin | Dashboard</title>
+</head>
+
+<body>
+	<header style="height: 80px;">
+		<div class="logo">TicketShow: Admin | {{uname}}</div>
+		<div class="navbar">
+			<a href="/addvenue">Add Venue</a>
+			<a href="/addmovie">Add Movies</a>
+			<a href="/logout"><button class="logout-btn">Logout</button></a>
+		</div>
+	</header>
+
+<div style="max-height: 680px; min-height: 680px; width: 100%; overflow: auto;">
+
+<div class="flex-container">
+	{% if md|length > 0 %}
+    {% for m in md|reverse %}
+
+	<div class="card" style="margin: 5px;">
+		<img src="{{ url_for('static', filename='Posters/' + m.poster) }}" class="card-img-top" width="600" height="400" 
+		alt="..." style="object-fit: fill; max-height: 145px; max-width: 245px; min-height: 145px; min-width: 245px;">
+		
+		<div class="card-header"><i class="bi bi-film"></i> {{m.movie_name}}</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item" style="max-height: 70px; min-height: 70px;">{{m.description}}</li>
+			<li class="list-group-item">Rated: {{m.censor}} &nbsp;&nbsp;|&nbsp;&nbsp; <i class="bi bi-star-fill" style="color: gold;"></i> {{m.rating}} / 5 </li>
+		</ul>
+		<p>
+		  <a href="/edit_movie/{{m.movie_id}}" class="card-link"><button class="btn btn-success" style="margin-left: 60px;">
+			<i class="bi bi-pencil"></i></button></a>
+		  <a href="/delete?mid={{m.movie_id}}&type=confirm" class="card-link"><button class="btn btn-danger">
+			<i class="bi bi-trash3"></i></button></a>
+		</p>
+	</div> 
+	{% endfor %}
+	{% endif %}
+</div>
+ 
+
+{% if vd|length > 0 %}
+{% for v in vd %}
+<div class="flex-container" style="margin: 5px; border: 5px solid black; overflow-y:hidden">
+	<div class="card col" style="height: 240px; width: 250px; ">
+		<div class="card-header col">{{v[0].venue_name}}</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item ">{{v[0].venue_location}}</li>
+			<li class="list-group-item ">{{v[0].venue_place}}</li>
+			<li class="list-group-item ">Seats | {{v[0].capacity}}</li>
+		</ul>
+		<div class="card-body">
+		  <a href="/edit_venue/{{v[0].venue_id}}" class="card-link"><button class="btn btn-success">
+			<i class="bi bi-pencil"></i></button></a>
+		  <a href="/delete?vid={{v[0].venue_id}}&type=confirm" class="card-link"><button class="btn btn-danger">
+			<i class="bi bi-trash3"></i></button></a>
+		  <a href="/add_show/{{v[0].venue_id}}" class="card-link btn btn-primary">+ Show</a>
+		</div>	
+	</div> 
+
+		{% if v[1]|length > 0 %}
+		{% for s in v[1]|reverse %}
+		<!-- <div class="flex-container" style="margin: 5px; border: 5px solid black"> -->
+			<div class="card" style="height: 240px; width: 485px;">
+				<div class="card-header">Show | {{s.show_name}}</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item" id="list">Venue | {{s.show_add}}</li>
+					<li class="list-group-item" id="list">Seats Available | {{s.rseats}}</li>
+					<li class="list-group-item" id="list"><i class="bi bi-clock-fill"></i> Time: {{s.start_time.replace('T', ' ') + ' | ' + s.end_time.replace('T', ' ')}}</li>
+				</ul>
+				<div class="card-body">
+				<a href="/edit_show/{{s.show_id}}" class="card-link"><button class="btn btn-success"><i class="bi bi-pencil"></i></button></a>
+				<a href="/delete?sid={{s.show_id}}&type=confirm" class="card-link"><button class="btn btn-danger"><i class="bi bi-trash3"></i></button></a>
+				</div>	
+			</div> 
+
+		{% endfor %}
+		{% endif %}
+	</div>
+{% endfor %}
+{% endif %}
+</div>
+</body>
+</html>
